@@ -1,5 +1,9 @@
 import { dataSource, log, store } from "@graphprotocol/graph-ts";
+<<<<<<< HEAD
 import { AludelFactory, ProgramAdded, ProgramDelisted, TemplateAdded, TemplateUpdated } from "../generated/AludelFactory/AludelFactory";
+=======
+import { AludelFactory, ProgramAdded, TemplateAdded, TemplateUpdated } from "../generated/AludelFactory/AludelFactory";
+>>>>>>> eef94a2 (update mappings)
 import { RewardProgram, Template } from "../generated/schema";
 import { AludelV15Template } from "../generated/templates";
 import { AludelV15 } from "../generated/templates/AludelV15Template/AludelV15";
