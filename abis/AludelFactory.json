@@ -102,7 +102,6 @@
         "internalType": "address",
         "name": "program",
         "type": "address"
-<<<<<<< HEAD
       }
     ],
     "name": "ProgramDelisted",
@@ -116,8 +115,6 @@
         "internalType": "address",
         "name": "program",
         "type": "address"
-=======
->>>>>>> 8ab0908 (update AludelFactory abi)
       },
       {
         "indexed": false,
@@ -299,8 +296,6 @@
     "type": "function"
   },
   {
-<<<<<<< HEAD
-=======
     "inputs": [],
     "name": "getTemplates",
     "outputs": [
@@ -332,6 +327,8 @@
   },
   {
 >>>>>>> 8ab0908 (update AludelFactory abi)
+=======
+>>>>>>> fc2380a (update abis & config)
     "inputs": [
       {
         "internalType": "address",
