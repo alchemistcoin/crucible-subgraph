@@ -88,6 +88,8 @@ dataSources:
           handler: handleTemplateAdded
         - event: TemplateUpdated(address,bool)
           handler: handleTemplateUpdated
+        - event: ProgramChanged(address,string,string)
+          handler: handleProgramChanged
 
       file: ./src/aludelFactory.ts
 {{/AludelFactory}}

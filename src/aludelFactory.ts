@@ -1,5 +1,5 @@
 import { dataSource, log, store } from "@graphprotocol/graph-ts";
-import { AludelFactory, ProgramAdded, ProgramDelisted, TemplateAdded, TemplateUpdated } from "../generated/AludelFactory/AludelFactory";
+import { AludelFactory, ProgramAdded, ProgramChanged, ProgramDelisted, TemplateAdded, TemplateUpdated } from "../generated/AludelFactory/AludelFactory";
 import { RewardProgram, Template } from "../generated/schema";
 import { AludelV15Template } from "../generated/templates";
 import { AludelV15 } from "../generated/templates/AludelV15Template/AludelV15";
@@ -75,4 +75,27 @@ export function handleTemplateChanged(event: TemplateUpdated): void {
 
   template.disabled = event.params.disabled
   template.save()
+}
+
+export function handleProgramChanged(event: ProgramChanged): void {
+  let id = getIdFromAddress(event.params.program);
+  let program = RewardProgram.load(id)
+
+  if (program === null) {
+    log.error('handleProgramChanged: cannot load program with id', [id])
+    return;
+  }
+
+  // update name and url if they changed
+  if (event.params.name.length > 0) {
+    program.name = event.params.name
+  }
+  // idem above
+  if (event.params.url.length > 0) {
+    program.stakingTokenUrl = event.params.url
+  }
+  // save if either name or url changed
+  if (event.params.name.length > 0 || event.params.url.length > 0) {
+    program.save()
+  }
 }
