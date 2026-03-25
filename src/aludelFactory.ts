@@ -65,7 +65,7 @@ export function handleTemplateAdded(event: TemplateAdded): void {
   template.name = data.value.name
   template.save()
 }
-export function handleTemplateChanged(event: TemplateUpdated): void {
+export function handleTemplateUpdated(event: TemplateUpdated): void {
   let id = getIdFromAddress(event.params.template);
   let template = Template.load(id)
   if (template === null) {

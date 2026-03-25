@@ -105,5 +105,5 @@ export function createStake(
 }
 
 export function isAddressZero(address: Address): boolean {
-  return address.equals(Address.fromString("0x0x0000000000000000000000000000000000000000"))
+  return address.equals(Address.fromString("0x0000000000000000000000000000000000000000"))
 }

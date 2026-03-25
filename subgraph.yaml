@@ -1,0 +1,150 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: CrucibleFactory
+    network: mainnet
+    source:
+      address: "0x54e0395CFB4f39beF66DBCd5bD93Cca4E9273D56"
+      abi: CrucibleFactory
+      startBlock: 11880064
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CrucibleEntity
+        - InstanceAdded
+        - Transfer
+      abis:
+        - name: CrucibleFactory
+          file: ./abis/CrucibleFactory.json
+        - name: Crucible
+          file: ./abis/Crucible.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: InstanceAdded(address)
+          handler: handleInstanceAdded
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/factory.ts
+  - kind: ethereum/contract
+    name: VaultFactory
+    network: mainnet
+    source:
+      address: "0x8A09fFA4d4310c7F59DC538a1481D8Ba2214Cef0"
+      abi: CrucibleFactory
+      startBlock: 11880064
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CrucibleEntity
+        - InstanceAdded
+        - Transfer
+      abis:
+        - name: CrucibleFactory
+          file: ./abis/CrucibleFactory.json
+        - name: Crucible
+          file: ./abis/Crucible.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: InstanceAdded(address)
+          handler: handleInstanceAdded
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/factory.ts
+  - kind: ethereum/contract
+    name: AludelFactory
+    network: mainnet
+    source:
+      address: "0xfe32d8c1dcc3e31d2286c4ed467c16e213e2d9b7"
+      abi: AludelFactory
+      startBlock: 11880064
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AludelFactory
+      abis:
+        - name: AludelFactory
+          file: ./abis/AludelFactory.json
+        - name: AludelV15
+          file: ./abis/AludelV15.json
+      eventHandlers:
+        - event: ProgramAdded(address,string,string)
+          handler: handleProgramAdded
+        - event: ProgramDelisted(address)
+          handler: handleProgramDelisted
+        - event: TemplateAdded(address)
+          handler: handleTemplateAdded
+        - event: TemplateUpdated(address,bool)
+          handler: handleTemplateUpdated
+
+      file: ./src/aludelFactory.ts
+
+templates:
+  - kind: ethereum/contract
+    name: CrucibleTemplate
+    network: mainnet
+    source:
+      abi: Crucible
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/crucible.ts
+      entities:
+        - Crucible
+        - ERC020Token
+      abis:
+        - name: Crucible
+          file: ./abis/Crucible.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+
+      eventHandlers:
+        # event Locked(address delegate, address token, uint256 amount);
+        - event: Locked(address,address,uint256)
+          handler: handleLocked
+        # event Unlocked(address delegate, address token, uint256 amount);
+        - event: Unlocked(address,address,uint256)
+          handler: handleUnlocked
+        # event RageQuit(address delegate, address token, bool notified, string reason);
+        - event: RageQuit(address,address,bool,string)
+          handler: handleRageQuit
+
+  - kind: ethereum/contract
+    name: AludelV15Template
+    network: mainnet
+    source:
+      abi: AludelV15
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/aludelv1.5.ts
+      entities:
+        - Aludel
+        - ERC020Token
+      abis:
+        - name: AludelV15
+          file: ./abis/AludelV15.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RewardClaimed(address,address,uint256)
+          handler: handleRewardClaimed
+        - event: RewardClaimed(address,address,address,uint256)
+          handler: handleRewardClaimedLegacy
+        - event: VaultFactoryRegistered(address)
+          handler: handleVaultFactoryRegistered
+        - event: VaultFactoryRemoved(address)
+          handler: handleVaultFactoryRemoved

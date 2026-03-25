@@ -25,6 +25,7 @@ function bumpCrucibleCounter(): Counters {
   let counter = Counters.load("crucible-counter");
   if (counter == null) {
     counter = new Counters("crucible-counter");
+    counter.count = BigInt.fromI32(0);
   }
   counter.count = counter.count.plus(BigInt.fromI32(1));
   counter.save();
@@ -41,6 +42,7 @@ function createCrucible(event: Transfer): void {
   entity.owner = to;
   entity.blockNumber = event.block.number;
   entity.factory = event.address;
+  entity.txhash = event.transaction.hash;
 
   if (getCrucibleFactoryAddress() == entity.factory) {
     entity.index = getCrucibleCounter();

@@ -1,5 +1,5 @@
 
-type CrucibleEntity @entity {
+type CrucibleEntity @entity(immutable: false) {
     id: ID!
     owner: Bytes!            
     timestamp: BigInt!
@@ -16,7 +16,7 @@ type CrucibleEntity @entity {
     factory: Bytes!
 }
 
-type Lock @entity {
+type Lock @entity(immutable: false) {
     # id = crucibleId-lockID
     id: ID!
     delegate: Bytes!
@@ -32,14 +32,14 @@ type Lock @entity {
     crucible: CrucibleEntity!
 }
 
-type Stake @entity {
+type Stake @entity(immutable: false) {
     id: ID!
     amount: BigInt!
     timestamp: BigInt!
     lock: Lock!
 }
 
-type Unstake @entity {
+type Unstake @entity(immutable: false) {
     id: ID!
     amount: BigInt!
     duration: BigInt!
@@ -47,12 +47,12 @@ type Unstake @entity {
     lock: Lock!
 }
 
-type Counters @entity {
+type Counters @entity(immutable: false) {
     id: ID!
     count: BigInt!
 }
 
-type RewardProgram @entity {
+type RewardProgram @entity(immutable: false) {
     # contract address
     id: ID!
     
@@ -68,14 +68,14 @@ type RewardProgram @entity {
     vaultFactories: [ProgramVaultFactory!]! @derivedFrom(field: "rewardProgram")
 }
 
-type VaultFactory @entity {
+type VaultFactory @entity(immutable: false) {
     # vault address
     id: ID!
 
     rewardPrograms: [ProgramVaultFactory!]! @derivedFrom(field: "vaultFactory")
 }
 
-type ProgramVaultFactory @entity {
+type ProgramVaultFactory @entity(immutable: false) {
     # factory-program
     id: ID!
 
@@ -83,14 +83,14 @@ type ProgramVaultFactory @entity {
     rewardProgram: RewardProgram!
 }
 
-type Template @entity {
+type Template @entity(immutable: false) {
     # contract address
     id: ID!
     disabled: Boolean
     name: String
 }
 
-type Reward @entity {
+type Reward @entity(immutable: false) {
     # crucibleId-token
     id: ID!
     token: ERC20Token!
@@ -105,12 +105,12 @@ type Reward @entity {
     crucible: CrucibleEntity!
 }
 
-type Leaderboard @entity {
+type Leaderboard @entity(immutable: false) {
     id: ID!
     points: BigInt!
 }
 
-type ERC20Token @entity {
+type ERC20Token @entity(immutable: false) {
     id: ID!
 
     address: Bytes!
@@ -119,6 +119,6 @@ type ERC20Token @entity {
     decimals: BigInt!
 }
 
-type Config @entity {
+type Config @entity(immutable: false) {
     id: ID!
 }
